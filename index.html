@@ -1,49 +1,161 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sicherheitsausweis Verifizierung</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sicherheitsausweis-Verifizierung</title>
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background: #fff;
-      color: #000;
+      font-family: "Segoe UI", "Helvetica Neue", sans-serif;
+      background: linear-gradient(to bottom, #f2f4f7, #d9dee2);
+      color: #111;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
+
+    header {
+      background: #002b55;
+      color: white;
+      padding: 25px 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 4px solid #0074c4;
+    }
+
+    .logo {
+      width: 40px;
+      height: 50px;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 500;
+    }
+
+    .header-text p {
+      margin: 2px 0 0;
+      font-size: 13px;
+      color: #d3e1f1;
+    }
+
     .content {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 50px;
-      font-size: 24px;
-      font-weight: bold;
+      padding: 40px 20px;
     }
-    .footer {
-      background: #000;
-      color: #ccc;
+
+    .message-box {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
       text-align: center;
-      padding: 15px;
-      font-size: 14px;
+      max-width: 500px;
+      width: 100%;
     }
+
     .checkmark {
+      font-size: 34px;
       color: green;
-      font-size: 28px;
-      margin-right: 12px;
+      animation: pop 0.3s ease-out;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .message-box h2 {
+      margin-top: 15px;
+      font-size: 20px;
+      color: #222;
+    }
+
+    .message-box p {
+      font-size: 14px;
+      color: #444;
+      margin-top: 10px;
+      text-align: left;
+    }
+
+    .info-list {
+      font-size: 13px;
+      margin-top: 20px;
+      color: #333;
+      text-align: left;
+    }
+
+    .info-list p {
+      margin: 8px 0;
+      line-height: 1.5;
+    }
+
+    .footer {
+      background: #1a1a1a;
+      color: #bbb;
+      text-align: center;
+      padding: 12px;
+      font-size: 13px;
     }
   </style>
 </head>
 <body>
+
+  <header>
+    <svg class="logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="0,0 100,0 100,100" fill="#0074c4"/>
+      <polygon points="0,0 0,100 100,100" fill="#ffffff"/>
+      <rect width="100" height="100" fill="none" stroke="#000" stroke-width="4"/>
+    </svg>
+    <div class="header-text">
+      <h1>Verifizierungsstelle Sicherheitsdienste</h1>
+      <p>Prüfsystem Zürich · Zugriff nur autorisierten Stellen erlaubt</p>
+    </div>
+  </header>
+
   <div class="content">
-    <span class="checkmark">✅</span>
-    <span>Dieser Sicherheitsausweis wurde erfolgreich verifiziert.</span>
+    <div class="message-box">
+      <div class="checkmark">✅</div>
+      <h2>Sicherheitsausweis erfolgreich verifiziert</h2>
+      <p>Die vorgelegte Identifikation entspricht einem gültigen Sicherheitsausweis nach kantonalem Standard.</p>
+
+      <div class="info-list">
+        <p><strong>Ausweis-Nr.:</strong> ZH-SEC-27491683</p>
+        <p><strong>Verifiziert am:</strong> <span id="veri"></span></p>
+        <p><strong>Status:</strong> <span style="color: green;">gültig</span></p>
+      </div>
+    </div>
   </div>
+
   <div class="footer">
-    © 2025 ID Verification
+    © 2025 Verifizierungsdienst Zürich – Interne Prüfplattform für Sicherheitsausweise
   </div>
+
+  <script>
+    const now = new Date();
+
+    const wochentage = ["So.", "Mo.", "Di.", "Mi.", "Do.", "Fr.", "Sa."];
+    const monate = [
+      "Januar", "Februar", "März", "April", "Mai", "Juni",
+      "Juli", "August", "September", "Oktober", "November", "Dezember"
+    ];
+
+    const tag = String(now.getDate()).padStart(2, '0');
+    const monat = monate[now.getMonth()];
+    const jahr = now.getFullYear();
+    const wochentag = wochentage[now.getDay()];
+    const stunde = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+
+    const fullLine = `${wochentag} ${tag}. ${monat} ${jahr}, ${stunde}:${minute}\u00A0Uhr`;
+    document.getElementById("veri").innerText = fullLine;
+  </script>
+
 </body>
 </html>
